@@ -29,8 +29,10 @@ if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
     #select updated,device,bywho,setT,setH,fruit from dev_settings order by updated desc limit 1;
     /* Select queries return a resultset */
     if ($result = $mysqli->query("select updated,device,bywho,setT,setH,fruit from dev_settings order by updated desc limit 1")) {
-        
 
+        while ($row = $result->fetch_row()) {
+          printf ("%s (%s)\n", $row[0], $row[1]);
+        }
         /* free result set */
         $result->close();
     }
