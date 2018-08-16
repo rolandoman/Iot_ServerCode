@@ -1,1 +1,36 @@
+<?
 
+$ts = intval(time()/100);
+
+# First decide whether to communicate at all..
+if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
+
+        # calculate the one time shared password
+        $otp = md5($_GET["dev"]."poop".strval($ts));
+
+        if ($otp == $_GET["otp"]){
+
+                # once the one time password is verified, then determine if we need to update any settings
+                # if the passwords don't match, don't send anything - stealth mode all the way
+
+                # if timestamp of last change received from device is less than timestamp of
+                # last change on database, then server wins. if device change is more recent
+                # than database, then device wins. After determination of winner, timestamp
+                # of last change should be the same so that device and server only need to act
+                # if timestamp is different.
+
+                # get lastupdate time and all the settings associated with the change
+
+                # transmit this information to the device
+
+                header("iot: dev=hch2&setT=25.5&setH=75&fruit=0&lastupdate=1534432842&otp=".$opt);
+        }
+}
+
+?><!DOCTYPE html>
+<html>
+
+<body>
+<p>poop</P>
+</body>
+</html>
