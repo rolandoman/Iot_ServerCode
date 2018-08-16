@@ -4,14 +4,14 @@
     <title>jQuery Knob demo</title>
     <style>
     .centre {
-      width: 400px;
-      height: 400px;
-      position: absolute;
-      top:0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
+      position:absolute;
+      color:#fff;
+      top:50%;
+      left:50%;
+      padding:15px;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
     }
     .b {
       display: inline-block;
@@ -33,8 +33,8 @@
 </head>
 <body>
 <div class="center">
-  <div class"b"><input class="dial" data-min="20" data-max="28" data-displayPrevious=true data-step="0.1" value="25.5"></div>
-  <div class"b"><input class="dial" data-min="30" data-max="90" data-displayPrevious=true data-step="1" value="75"></div>
+  <span class"b"><input class="dial" data-min="20" data-max="28" data-displayPrevious=true data-step="0.1" value="25.5"></span>
+  <span class"b"><input class="dial" data-min="30" data-max="90" data-displayPrevious=true data-step="1" value="75"></span>
 </div>
 </body>
 </html>
