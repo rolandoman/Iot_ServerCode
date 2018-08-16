@@ -1,30 +1,34 @@
-<?
+<? #careful not to put anything here to kill the headers
 
 $ts = intval(time()/100);
 
 # First decide whether to communicate at all..
 if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
 
-        # calculate the one time shared password
-        $otp = md5($_GET["dev"]."poop".strval($ts));
+  # if the device transmitted is valid, then switch to this for comms verification
+  $dev = $_GET["dev"];
 
-        if ($otp == $_GET["otp"]){
+  # calculate the one time shared password
+  $otp = md5($dev."poop".strval($ts));
 
-                # once the one time password is verified, then determine if we need to update any settings
-                # if the passwords don't match, don't send anything - stealth mode all the way
+  if ($otp == $_GET["otp"]){
 
-                # if timestamp of last change received from device is less than timestamp of
-                # last change on database, then server wins. if device change is more recent
-                # than database, then device wins. After determination of winner, timestamp
-                # of last change should be the same so that device and server only need to act
-                # if timestamp is different.
+    # once the one time password is verified, then determine if we need to update any settings
+    # if the passwords don't match, don't send anything - stealth mode all the way
+    # influxdb timestamp: 1534441595735638926 22.8 - don't need no stinking nano seconds...
 
-                # get lastupdate time and all the settings associated with the change
+    # if timestamp of last change received from device is less than timestamp of
+    # last change on database, then server wins. if device change is more recent
+    # than database, then device wins. After determination of winner, timestamp
+    # of last change should be the same so that device and server only need to act
+    # if timestamp is different.
 
-                # transmit this information to the device
+    # get lastupdate time and all the settings associated with the change
 
-                header("iot: dev=hch2&setT=25.5&setH=75&fruit=0&lastupdate=1534432842&otp=".$otp);
-        }
+    # transmit this information to the device
+
+    header("iot: dev=".$dev."&setT=25.5&setH=75&fruit=0&lastupdate=1534432842&otp=".$otp);
+  }
 }
 
 ?><!DOCTYPE html>
