@@ -25,6 +25,16 @@ if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
 
     # get lastupdate time and all the settings associated with the change
 
+    $mysqli = new mysqli("localhost", "web", "the.Webiot1", "iot1");
+    #select updated,device,bywho,setT,setH,fruit from dev_settings order by updated desc limit 1;
+    /* Select queries return a resultset */
+    if ($result = $mysqli->query("select updated,device,bywho,setT,setH,fruit from dev_settings order by updated desc limit 1")) {
+        
+
+        /* free result set */
+        $result->close();
+    }
+
     # transmit this information to the device
 
     header("iot: dev=".$dev."&setT=25.5&setH=75&fruit=0&lastupdate=1534432842&otp=".$otp);
