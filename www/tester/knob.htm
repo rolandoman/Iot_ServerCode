@@ -13,14 +13,21 @@
       -webkit-transform: translate(-50%,-50%);
       transform: translate(-50%,-50%);
     }
-    .b {
-      display: inline-block;
-      width: 150px;
+    .a {
+      float:left;
+      width:45%;
       height: 150px;
       padding: 100px;
       border: 2px solid blue;
       margin: 50px;
-      background-color: yellow;
+    }
+    .b {
+      float:right;
+      width:45%;
+      height: 150px;
+      padding: 100px;
+      border: 2px solid blue;
+      margin: 50px;
     }
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -34,7 +41,7 @@
 </head>
 <body>
 <div class="center">
-  <div class"b"><input class="dial" data-min="20" data-max="28" data-displayPrevious=true data-step="0.1" value="25.5"></div>
+  <div class"a"><input class="dial" data-min="20" data-max="28" data-displayPrevious=true data-step="0.1" value="25.5"></div>
   <div class"b"><input class="dial" data-min="30" data-max="90" data-displayPrevious=true data-step="1" value="75"></div>
 </div>
 </body>
