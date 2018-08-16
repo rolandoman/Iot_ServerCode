@@ -28,18 +28,20 @@ if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
     $mysqli = new mysqli("localhost", "web", "the.Webiot1", "iot1");
     #select updated,device,bywho,setT,setH,fruit from dev_settings order by updated desc limit 1;
     /* Select queries return a resultset */
-    if ($result = $mysqli->query("select updated,device,bywho,setT,setH,fruit from dev_settings order by updated desc limit 1")) {
+    if ($result = $mysqli->query("select updated,device,bywho,setT,setH,fruit from dev_settings where device='".$dev."' order by updated desc limit 1")) {
 
-        while ($row = $result->fetch_row()) {
-          printf ("%s (%s)\n", $row[0], $row[1]);
+        if ($row = $result->fetch_row()) {
+          $updated=$row[0];
+          #$device=$row[1];
+          $setT = $row[3];$setH = $row[4];$fruit=$row[5];
         }
         /* free result set */
         $result->close();
     }
-
+    $lastupdate = strtotime($updated);
     # transmit this information to the device
 
-    header("iot: dev=".$dev."&setT=25.5&setH=75&fruit=0&lastupdate=1534432842&otp=".$otp);
+    header("iot: dev=".$dev."&setT=".$setT."&setH=".$setH."&fruit=".$fruit."&lastupdate=".$lastupdate."&otp=".$otp);
   }
 }
 
