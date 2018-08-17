@@ -3,7 +3,7 @@
 $ts = intval(time()/100);
 
 # First decide whether to communicate at all..
-//if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
+if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
 
   # if the device transmitted is valid, then switch to this for comms verification
   $dev = $_GET["dev"];
@@ -14,7 +14,7 @@ $ts = intval(time()/100);
   //$crcnum = crc32($dev."poop".strval($ts));
   $otp = sprintf("%lX",$crcnum);
 
-//  if ($otp == $_GET["otp"]){
+  if ($otp == $_GET["otp"]){
 
     # once the one time password is verified, then determine if we need to update any settings
     # if the passwords don't match, don't send anything - stealth mode all the way
@@ -45,8 +45,8 @@ $ts = intval(time()/100);
     # transmit this information to the device
 
     header("iot: dev=".$dev."&setT=".$setT."&setH=".$setH."&fruit=".$fruit."&lastupdate=".$lastupdate."&otp=".$otp);
-//  }
-//}
+  }
+}
 
 ?><!DOCTYPE html>
 <html>
