@@ -12,7 +12,7 @@ $ts = intval(time()/100);
   //$otp = md5($dev."poop".strval($ts));
   $crcnum = crc32($dev."poop");
   //$crcnum = crc32($dev."poop".strval($ts));
-  $otp = sprintf("%u",$crcnum);
+  $otp = sprintf("%X",$crcnum);
 
 //  if ($otp == $_GET["otp"]){
 
