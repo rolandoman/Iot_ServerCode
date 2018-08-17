@@ -34,17 +34,30 @@ if ((sizeof($_GET)>0) && (preg_match('/\bhch\d\b/',$_GET["dev"]))) {
     if ($result = $mysqli->query("select updated,device,bywho,setT,setH,fruit from dev_settings where device='".$dev."' order by updated desc limit 1")) {
 
         if ($row = $result->fetch_row()) {
-          $updated=$row[0];
+          $updatestr=$row[0];
           #$device=$row[1];
           $setT = $row[3];$setH = $row[4];$fruit=$row[5];
         }
         /* free result set */
         $result->close();
     }
-    $lastupdate = strtotime($updated);
-    # transmit this information to the device
+    $lastupdate = strtotime($updatestr);
+    # compare server lastupdate time to device last update time
+    if ($lastupdate < $_GET["lastupdate"]) {
+      // device wins, update server database and send back its own data
+      // insert into dev_settings (device,bywho,setT,setH,fruit) values ('hch2','server','2610','80','0');
+
+      $lastupdate = $_GET["lastupdate"];
+      $setT = $_GET["setT"];$setH = $_GET["setH"];$fruit=$_GET["fruit"];
+
+      $mysqli->query("insert into dev_settings (updated,device,bywho,setT,setH,fruit) values ('".date('Y-m-d H:i:s', $lastupdate)."','".$dev."','device','".$setT."','".$setH."','".$fruit."')");
+
+    } else if ($lastupdate > $_GET["lastupdate"]) {
+      //server wins, do nothing and hope that the device listens to us and updates its own damn data
+    }
 
     header("iot: dev=".$dev."&setT=".$setT."&setH=".$setH."&fruit=".$fruit."&lastupdate=".$lastupdate."&otp=".$otp);
+    $mysqli->close();
   }
 }
 
