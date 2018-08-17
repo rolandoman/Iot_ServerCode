@@ -10,7 +10,8 @@ $ts = intval(time()/100);
 
   # calculate the one time shared password
   //$otp = md5($dev."poop".strval($ts));
-  $crcnum = crc32($dev."poop".strval($ts));
+  $crcnum = crc32($dev."poop");
+  //$crcnum = crc32($dev."poop".strval($ts));
   $otp = sprintf("%u",$crcnum);
 
 //  if ($otp == $_GET["otp"]){
